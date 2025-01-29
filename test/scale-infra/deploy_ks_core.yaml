@@ -24,12 +24,7 @@
              sudo chmod a+x /usr/local/bin/yq
 
     - name: install OCM CLI
-      shell: |
-             curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
-            #  mkdir -p ocm
-            #  export INSTALL_DIR="$PWD/ocm"
-            #  curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
-            #  export PATH=$PWD/ocm:$PATH
+      shell: curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
         
     - name: install KubeFlex
       shell: |
@@ -44,11 +39,6 @@
              echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
              sudo apt-get update
              sudo apt-get install helm
-
-    - name: clone the clusterloader2 repo
-      shell: |
-             rm -r $HOME/perf-tests
-             git clone -b release-1.31 https://github.com/kubernetes/perf-tests.git
 
     - name: Register a variable, ignore errors and continue
       ansible.builtin.command: kubectl config use-context kscore

@@ -39,12 +39,7 @@
              sudo mv ./kind /usr/local/bin/kind
 
     - name: install OCM CLI
-      shell: |
-             curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
-             mkdir -p ocm
-             export INSTALL_DIR="$PWD/ocm"
-             curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
-             export PATH=$PWD/ocm:$PATH
+      shell: curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
 
     - name: install kubectl
       shell: |

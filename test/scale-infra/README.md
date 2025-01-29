@@ -28,7 +28,7 @@ Starting from a local directory containing the git repo, do the following:
 
     ```
     cd test/scale-infra
-    ./deploy_ks_cp_infra.sh --region us-east-2 --k8s_num_masters 1 --k8s_num_workers 2 --instances_type t2.xlarge   --aws_key_name mykey  --arch x86_64 --ks_release 0.25.0
+    ./deploy_ks_cp_infra.sh --region us-east-2 --k8s_num_masters 1 --k8s_num_workers 2 --instances_type t2.xlarge   --aws_key_name mykey  --arch x86_64 --ks_release 0.25.1
     ```
 
     The above command creates the required AWS infrastructure including a VPC, security groups and EC2 instances. Then, it creates a Kubernetes cluster deployed using Kubeadm. Lastly, it deploys the KubeStellar core components. You can use the flag `--ks_release` to specify the KubeStellar release. Kubestellar is deployed using the [KS helmchart](https://github.com/kubestellar/kubestellar/tree/main/core-chart) configured with a ITS of type host. 
