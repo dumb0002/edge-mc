@@ -70,7 +70,7 @@
              --set-json='WDSes=[{"name":"wds1"}]' \
              --set-json='verbosity.default=5'
 
-    - name: Get kubeconfig "contexts" for wds1 and its1 spaces
+    - name: Get kubeconfig "context" for wds1 space
       shell: |
              kflex ctx wds1
 
