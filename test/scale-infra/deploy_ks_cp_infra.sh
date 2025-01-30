@@ -21,10 +21,15 @@ num_workers=""
 instance_type=""
 ks_release="0.24.0"
 archt='x86_64' # e.g., x86_64 and arm64
+ec2_image_id=""
+vpc_name=""
 
 while (( $# > 0 )); do
     if [ "$1" == "--region" ]; then
         region=$2
+        shift
+    elif [ "$1" == "--vpc_name" ]; then
+        vpc_name=$2
         shift
     elif [ "$1" == "--aws_key_name" ]; then
         aws_key_name=$2
@@ -38,6 +43,9 @@ while (( $# > 0 )); do
     elif [ "$1" == "--instances_type" ]; then
         instance_type=$2
         shift
+    elif [ "$1" == "--ec2_image_id" ]; then
+        ec2_image_id=$2
+        shift
     elif [ "$1" == "--arch" ]; then
         arch=$2
         shift
@@ -49,10 +57,10 @@ while (( $# > 0 )); do
 done
 
 # 1. Deploy vpc:
-ansible-playbook deploy_vpc_core.yaml -e "region=$region"
+ansible-playbook deploy_vpc_core.yaml -e "name=$vpc_name region=$region"
 
 # 2. Deploy instances:
-ansible-playbook create-ec2.yaml -e "cluster_name=core region=$region aws_key_name=$aws_key_name  num_masters=$num_masters num_workers=$num_workers instance_type=$instance_type arch=$arch" 
+ansible-playbook create-ec2.yaml -e "cluster_name=core region=$region name=$vpc_name aws_key_name=$aws_key_name  num_masters=$num_masters num_workers=$num_workers instance_type=$instance_type arch=$arch ec2_image=$ec2_image_id" 
 
 # 3. Install k8s:
 ansible-playbook -i .data/hosts_core deploy-masters.yaml --ssh-common-args='-o StrictHostKeyChecking=no'

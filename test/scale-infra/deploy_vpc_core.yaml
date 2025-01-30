@@ -103,5 +103,5 @@
     - name: Create vars file to help with deletion of resources
       ansible.builtin.copy:
         content: "vpc_name: {{ vpc_name }}\nvpc_id: {{ result_vpc.vpc.id }}\nvpc_cidr_block: {{ result_vpc.vpc.cidr_block}}\npublic_subnet_id: {{ result_public_subnet.subnet.id }}\nprivate_subnet_id: {{ result_private_subnet.subnet.id }}\nroute_table_list: [{{ result_public_route.route_table.route_table_id }}]\ncidr_list: [{{ result_public_subnet.subnet.cidr_block }}, {{ result_private_subnet.subnet.cidr_block }}]"
-        dest: ".data/{{ region }}_core_vpc_helper_vars.yaml"
+        dest: ".data/{{ region }}_{{ vpc_name }}_vpc_helper_vars.yaml"
    

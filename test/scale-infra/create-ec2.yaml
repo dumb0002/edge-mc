@@ -9,6 +9,7 @@
     ec2_image: "{{ image_id| default('ami-00eb69d236edcfaf8') }}"
     ec2_instance_type: "{{ ec2_type| default('t2.micro') }}"
     default_vpc: no
+    vpc_name:  "{{ name | default('ks_core') }}"
     aws_default_vpc_az: "{{ default_vpc_az| default('us-east-1b') }}"
     ec2_group: "{{ sig_group | default('ks-nodes') }}"
     aws_key_name: "{{ aws_key }}"
@@ -58,7 +59,7 @@
     when: default_vpc | bool
 
   - name: Read VPC configuration data
-    include_vars: ".data/{{ aws_region }}_core_vpc_helper_vars.yaml"
+    include_vars: ".data/{{ aws_region }}_{{ vpc_name }}_vpc_helper_vars.yaml"
     when: not default_vpc
 
   - name: Set subnet id fact for default VPC

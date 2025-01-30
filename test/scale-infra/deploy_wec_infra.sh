@@ -20,10 +20,15 @@ num_workers=""
 instance_type=""
 archt='x86_64' # e.g., x86_64 and arm64
 num_wecs=1
+ec2_image_id=""
+vpc_name=""
 
 while (( $# > 0 )); do
     if [ "$1" == "--region" ]; then
         region=$2
+        shift
+    elif [ "$1" == "--vpc_name" ]; then
+        vpc_name=$2
         shift
     elif [ "$1" == "--aws_key_name" ]; then
         aws_key_name=$2
@@ -34,6 +39,9 @@ while (( $# > 0 )); do
     elif [ "$1" == "--instance_type" ]; then
         instance_type=$2
         shift
+    elif [ "$1" == "--ec2_image_id" ]; then
+        ec2_image_id=$2
+        shift
     elif [ "$1" == "--archt" ]; then
         archt=$2
         shift
@@ -43,4 +51,7 @@ done
 
 
 ## 1. Create EC2 instances:
-ansible-playbook create-ec2.yaml -e "cluster_name=wec region=$region aws_key_name=$aws_key_name  wecs_hosting_instances=$num_hosts instance_type=$instance_type archt=$archt image_source=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20240423" 
+#ansible-playbook create-ec2.yaml -e "cluster_name=wec region=$region aws_key_name=$aws_key_name  wecs_hosting_instances=$num_hosts instance_type=$instance_type archt=$archt image_source=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20240423" 
+
+ansible-playbook create-ec2.yaml -e "cluster_name=wec region=$region name=$vpc_name aws_key_name=$aws_key_name  wecs_hosting_instances=$num_hosts instance_type=$instance_type arch=$arch ec2_image=$ec2_image_id" 
+

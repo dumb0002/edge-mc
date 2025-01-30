@@ -4,9 +4,10 @@
   gather_facts: no
   vars:
     aws_region: "{{ region }}"
+    vpc_name:  "{{ name | default('ks_core') }}"
     nat: no
   tasks:
-    - include_vars: ".data/{{ aws_region }}_core_vpc_helper_vars.yaml"
+    - include_vars: ".data/{{ aws_region }}_{{ vpc_name }}_vpc_helper_vars.yaml"
 
     - name: Delete NAT Gateway and release EIP
       amazon.aws.ec2_vpc_nat_gateway:
